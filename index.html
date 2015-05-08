@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+
+  <title>Life Supporter</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="">
+
+  <!-- Bootstrap Styles -->
+  <link href="css/bootstrap.css" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link href="database_login/css/style.css" rel="stylesheet">  
+
+  
+   
+  <!-- Carousel Slider -->
+  <link href="css/owl-carousel.css" rel="stylesheet">
+  
+
+  
+  <!-- Google Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,300,400italic,300italic,700,700italic,900' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Exo:400,300,600,500,400italic,700italic,800,900' rel='stylesheet' type='text/css'>
+
+ 
+  <script src="js/jquery.min.js"></script>
+	<script src="js/responsiveslides.js"></script>
+	<script src="js/html5sql.js"></script>
+	<script type="text/javascript"> 
+            $(document).ready(function () {
+                console.log("ready!");
+                $("#add").click(function (e) {
+                    e.preventDefault();
+                    var name = $("#name").val();
+                    var password = $("#password").val();
+
+		    var dataString = 'name=' + name + '&password=' + password;
+                    $.ajax({
+                        type: 'POST',
+                        data: dataString,
+                        crossDomain: true,
+                        url: 'http://sitarahussain.com/FinalProject/database_login/signin_db.php',
+						success: function(data){
+        if(data == "success")
+       window.location.href = "http://sitarahussain.com/FinalProject/database_login/index.php";
+        else
+           $("#name").after('<span class="error">no record found</span>');
+    }             
+                    });
+					
+                });
+            });
+
+
+        </script> 
+   
+         <script type="text/javascript"> 
+				 
+$( document ).ready(function() {
+    console.log( "ready!" );
+	$("#adduser").click(function(e) {
+		e.preventDefault();
+  var user1 = $("#user1").val(); 
+  var age = $("#age").val();
+  var gender = $("#gender").val(); 
+  var p1 = $("#p1").val();
+    var p2 = $("#p1").val();
+   var email = $("#email").val();
+     $(".error").hide();
+        var hasError = false;
+        var passwordVal = $("#p1").val();
+        var checkVal = $("#p2").val();
+// validation of user name:  
+		if (user1 == '') {
+            $("#user1").after('<span class="error">Please enter a username.</span>');
+            hasError = true;
+			exit();
+        }
+		
+			var letters = /^[0-9a-zA-Z]+$/;  
+if(!user1.match(letters))  
+{ 
+$("#user1").after('<span class="error">username must contain alphabets and numbers only</span>');
+            hasError = true;
+}	
+
+var numericExpression = /^[0-9]+$/;
+if(user1.match(numericExpression)){
+$("#user1").after('<span class="error">must need an alphabet character.</span>');
+            hasError = true;
+			
+}
+		else if ((user1.length < 5) || (user1.length > 20)) {
+$("#user1").after('<span class="error">username must be between 6 to 14.</span>');
+            hasError = true;
+		}
+// validation of age:
+else if (age == '') {
+            $("#age").after('<span class="error">Please enter a age.</span>');
+            hasError = true;
+        } 
+else if(age <= 9 || age > 80 )
+       {
+            $("#age").after('<span class="error">enter the valid age between 9 to 80</span>');
+            hasError = true;
+        } 
+
+
+// validation of gender: 	
+		 
+		
+		else if (gender == '') {
+            $("#gender").after('<span class="error">Please enter a gender.</span>');
+            hasError = true;
+        } 
+		
+// validation of email:
+
+
+		else if (email == '') {
+            $("#email").after('<span class="error">Please enter a email.</span>');
+            hasError = true;
+			exit();
+        }
+		var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+		 if(!mailformat.test(email)) { 
+$("#email").after('<span class="error">email is not valid.</span>');
+            hasError = true;
+			exit();
+}
+// validation of password:
+if (!/^(?=.*[0-9])(?=.*[a-z]).{6,}/.test(p1)) {
+$("#p1").after('<span class="error">password not valid.</span>');
+            hasError = true;
+}
+else if (p1.length > 15)  {
+$("#p1").after('<span class="error">password length exceeds 15 characters</span>');
+            hasError = true;
+		}
+else if(p1.match(numericExpression)){
+$("#p1").after('<span class="error">must need an alphabet character.</span>');
+            hasError = true;
+			
+			
+}
+ 
+		 else if (/[0-9]/.test(p1) === false) {
+          $("#p1").after('<span class="error">password can not be a full number.</span>');
+            hasError = true;
+    }
+       else if (passwordVal == '') {
+            $("#p1").after('<span class="error">Please enter a password.</span>');
+            hasError = true;
+        } else if (checkVal == '') {
+            $("#p2").after('<span class="error">Please re-enter your password.</span>');
+            hasError = true;
+        } else if (passwordVal != checkVal ) {
+            $("#p2").after('<span class="error">Passwords do not match.</span>');
+            hasError = true;
+        }
+        if(hasError == true) {return false;}
+		 else{
+  var dataString = 'user1='+user1+'&age='+age+'&gender='+gender+'&p1='+p1+'&email='+email;
+  alert(dataString);
+  $.ajax({
+    type:'POST',
+    data:dataString,
+	crossDomain: true,
+    url: 'http://sitarahussain.com/FinalProject/database_login/adduser_db.php',
+    success:function(data) {
+      alert(data);
+	    window.location.href = "http://sitarahussain.com/FinalProject/index.html";
+
+	}
+  });
+  }
+	});
+});
+
+
+
+</script> 
+		</head>
+		<body>
+        <div class="header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-sm-3 col-md-3 col-xs-12 hidden-xs">
+        <div class="logo"> <a href="#"><img alt="" class="img-responsive" src="images/logo.png"></a> </div>
+      </div>
+      
+      
+    </div>
+  </div>
+</div>
+		<!--<div id="topbar" class="clearfix">
+    	<div class="container">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+               
+            </div><
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+              
+            	
+            </div>
+        </div>
+    </div> end topbar -->
+	<section class="post-wrapper-top jt-shadow clearfix">
+		
+	</section><!-- end post-wrapper-top -->
+    
+    <section class="blog-wrapper inner-page">
+    	<div class="container">
+        	<div id="content" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                   <div class="col-md-6 ">
+ 						<div class="widget white-bg">
+                        	<div class="title">
+                            	<h3>Login Your Account</h3>
+                            </div><!-- end title -->
+                                <form id="loginform" method="post" name="loginform">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                            <input type="text" id="name" class="form-control" placeholder="Username">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                            <input type="password" id="password"  class="form-control" placeholder="Password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label> 
+                                                <input type="checkbox"> Remember me
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+								
+                                    <button type="submit" name="add" id="add"  class="btn">Sign in</button>
+                                    </div>
+                                </form>
+                        </div><!-- end widget -->
+					</div><!-- end col-md-6 -->
+                   <div class="col-md-6 ">
+ 						<div class="widget white-bg">
+                        	<div class="title">
+                            	<h3>Create An Account</h3>
+                            </div><!-- end title -->
+                                <form id="registerform" method="post" name="registerform">
+                                  <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                            <input type="text" id="user1" class="form-control" placeholder="Username">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+									 <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-edit"></i></span>     
+                                        <input type="text" id="age" class="form-control" placeholder="age" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                    </div>
+									 </div>
+                                    <div class="form-group">
+									 <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-users"></i></span>     
+                                        <select type="text" id="gender" class="form-control" placeholder="Gender">
+										 <option value="" selected></option>
+                                        <option value="male">male</option>
+                                        <option value="female">female</option>
+			                            </select>
+                                    </div>
+									  </div>
+									 <div class="form-group">
+									    <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>      
+                                        <input type="email" id="email" class="form-control" placeholder="email">
+                                    </div>
+									</div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                                            <input type="password" id="p1" class="form-control" placeholder="Password must be 6 character long must contain alphabet and number">
+                                        </div>
+                                    </div>
+									<div class="form-group">
+                                       <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                                            <input type="password" id="p2" class="form-control" placeholder="Re-Enter Password">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="form-group">
+                                        <input type="submit" name="adduser" id="adduser"  class="btn" value="Register an account">
+                                    </div>
+                                </form>
+                        </div><!-- end widget -->
+					</div><!-- end col-md-6 -->
+            	</div><!-- end row --> 
+            </div><!-- end content -->
+    	</div><!-- end container -->
+    </section><!--end white-wrapper -->
+
+	
+
+
+    
+	
+        
+  <!-- Main Scripts-->
+ 
+  <script type="text/javascript">
+ 
+  </script>
+
+  
+
+  </body>
+</html>
